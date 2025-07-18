@@ -19,7 +19,7 @@ app.post('/api/gerar-pix', async (req, res) => {
   }
 
   const pixPayload = {
-    amount: 1000,
+    amount: 7000,
     currency: "BRL",
     paymentMethod: "pix",
     installments: 1,
@@ -30,12 +30,12 @@ app.post('/api/gerar-pix', async (req, res) => {
       phone: telefone,
       externalRef: "pedido001",
       address: {
-        street: "Rua Mirandopolis",
-        streetNumber: "24",
+        street: "Rua Alvorada",
+        streetNumber: "55",
         complement: "Casa",
-        zipCode: "13308135",
+        zipCode: "13308-060",
         neighborhood: "Centro",
-        city: "Itu",
+        city: "Sorocaba",
         state: "SP",
         country: "BR"
       }
@@ -43,7 +43,7 @@ app.post('/api/gerar-pix', async (req, res) => {
     items: [
       {
         title: "Inscrição Concurso CNU",
-        unitPrice: 1000,
+        unitPrice: 7000,
         quantity: 1,
         tangible: false,
         externalRef: "inscricao2025"
