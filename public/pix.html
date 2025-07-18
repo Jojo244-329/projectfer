@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagamento via Pix</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f8f8f8;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #qrcode {
+      margin: 30px auto;
+      width: 256px;
+      height: 256px;
+    }
+
+    #codigo-pix {
+      width: 90%;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 16px;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      word-break: break-all;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .success {
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Escaneie o QR Code para pagar</h1>
+
+  <canvas id="qrcode"></canvas>
+
+  <div id="codigo-pix"></div>
+
+  <button onclick="copiarCodigoPix()">Copiar código Pix</button>
+  <div id="msg" class="success"></div>
+
+  <!-- Lib de QR Code -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script>
+  // 🔍 Função para ler parâmetros da URL
+  function getParametroURL(nome) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(nome);
+  }
+
+  const qrCodePix = getParametroURL('code');
+
+  if (!qrCodePix) {
+    document.body.innerHTML = "<h2 style='color: red;'>❌ Código Pix não informado na URL.</h2>";
+    throw new Error('Código Pix ausente');
+  }
+
+  // Gerar QR Code
+  QRCode.toCanvas(document.getElementById('qrcode'), qrCodePix, { width: 256 }, function (error) {
+    if (error) console.error(error);
+  });
+
+  // Mostrar código Pix
+  document.getElementById('codigo-pix').innerText = qrCodePix;
+
+  // Função copiar
+  function copiarCodigoPix() {
+    navigator.clipboard.writeText(qrCodePix).then(() => {
+      document.getElementById('msg').innerText = "Código Pix copiado com sucesso!";
+    });
+  }
+</script>
+
+</body>
+</html>
